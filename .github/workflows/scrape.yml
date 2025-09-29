@@ -13,18 +13,22 @@ jobs:
 
     steps:
       - name: 1. Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: 2. Configurar o Node.js
-        uses: actions/setup-node@v3
+      - name: 2. Configurar o Navegador (Chrome) para o Puppeteer
+        # Esta ação instala o Google Chrome e outras dependências necessárias
+        # para o Puppeteer funcionar corretamente no ambiente do GitHub.
+        uses: browser-actions/setup-chrome@v1
+
+      - name: 3. Configurar o Node.js
+        uses: actions/setup-node@v4
         with:
-          # CORREÇÃO: Usar a versão 20 do Node.js para melhor compatibilidade
           node-version: '20'
 
-      - name: 3. Instalar as dependências
+      - name: 4. Instalar as dependências
         run: npm install
 
-      - name: 4. Executar o Scraper
+      - name: 5. Executar o Scraper
         run: node server.js
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
